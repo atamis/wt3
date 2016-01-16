@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/atamis/wt3/act/home"
 	"github.com/atamis/wt3/act/session"
 	"github.com/gorilla/mux"
 )
@@ -8,6 +9,9 @@ import (
 func Routes() *mux.Router {
 
 	r := mux.NewRouter()
+
+	r.HandleFunc("/", home.Home).
+		Methods("GET")
 
 	r.HandleFunc("/login", session.Login).
 		Methods("POST")

@@ -54,6 +54,7 @@ func LoginPage(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+	sess.Save(w, r)
 
 	w.Header().Set("Content-Type", "text/html")
 

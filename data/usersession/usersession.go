@@ -12,7 +12,7 @@ import (
 var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
 type Session struct {
-	UserId   user.ID
+	UserId   int
 	LoggedIn bool
 }
 
@@ -74,8 +74,8 @@ func MakeSession(r *http.Request) (Session, error) {
 		_id := session.Values["userid"]
 
 		switch _id.(type) {
-		case user.ID:
-			s.UserId = _id.(user.ID)
+		case int:
+			s.UserId = _id.(int)
 		default:
 			s.LoggedIn = false
 			s.UserId = 0
@@ -92,10 +92,16 @@ func (s *Session) Save(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
+	fmt.Println("Save: ", s.Debug())
+
 	session.Values["userid"] = s.UserId
 	session.Values["loggedin"] = s.LoggedIn
 
-	session.Save(r, w)
+	if err != nil {
+		// TODO: remove panic for production.
+		panic(err)
+		return err
+	}
 
 	return nil
 }

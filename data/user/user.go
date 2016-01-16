@@ -2,10 +2,8 @@ package user
 
 import "errors"
 
-type ID int
-
 type User struct {
-	Id       ID
+	Id       int
 	Username string
 	Password string
 }
@@ -26,7 +24,7 @@ func FindUserName(username string) (User, error) {
 	return User{}, notfound
 }
 
-func FindUserId(id ID) (User, error) {
+func FindUserId(id int) (User, error) {
 	if id == 1 {
 		return andrew, nil
 	}
