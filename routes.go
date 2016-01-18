@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/atamis/wt3/act/home"
+	"github.com/atamis/wt3/act/polls"
 	"github.com/atamis/wt3/act/session"
 	"github.com/gorilla/mux"
 )
@@ -20,6 +21,9 @@ func Routes() *mux.Router {
 		Methods("GET")
 
 	r.HandleFunc("/login", session.LoginPage).
+		Methods("GET")
+
+	r.HandleFunc("/polls/{id}", polls.Poll).
 		Methods("GET")
 
 	return r
