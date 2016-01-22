@@ -52,3 +52,17 @@ func New(answer int, userId int, pollId int64) Answer {
 
 	return ans
 }
+
+func (a *Answer) Save() {
+	slot, err := Find(a.Id)
+
+	if err != nil {
+		answers = append(answers, *a)
+		return
+	}
+
+	slot.Id = a.Id
+	slot.Answer = a.Answer
+	slot.UserId = a.UserId
+	slot.PollId = a.PollId
+}

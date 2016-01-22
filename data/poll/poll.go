@@ -55,3 +55,9 @@ func (p *Poll) Collated() []int {
 
 	return ans
 }
+
+func (p *Poll) AddAnswer(userAnswer int, userId int) {
+	ans := answer.New(userAnswer, userId, p.Id)
+	ans.Save()
+	p.LoadAnswers()
+}

@@ -26,5 +26,8 @@ func Routes() *mux.Router {
 	r.HandleFunc("/polls/{id}", polls.Poll).
 		Methods("GET")
 
+	r.HandleFunc("/polls/{id}", polls.Answer).
+		Methods("POST")
+
 	return r
 }
