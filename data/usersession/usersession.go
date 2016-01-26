@@ -38,14 +38,14 @@ func (s *Session) Logout() error {
 	return nil
 }
 
-func (s *Session) CurrentUser() (user.User, error) {
+func (s Session) CurrentUser() (user.User, error) {
 	if s.LoggedIn {
 		return user.FindUserId(s.UserId)
 	}
 	return user.User{}, errors.New("user not found")
 }
 
-func (s *Session) Debug() string {
+func (s Session) Debug() string {
 	return fmt.Sprintf("%v", s)
 }
 
@@ -91,8 +91,6 @@ func (s *Session) Save(w http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("Save: ", s.Debug())
 
 	session.Values["userid"] = s.UserId
 	session.Values["loggedin"] = s.LoggedIn
