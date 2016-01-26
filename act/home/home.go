@@ -1,10 +1,10 @@
 package home
 
 import (
-	"fmt"
 	"net/http"
 
 	us "github.com/atamis/wt3/data/usersession"
+	"github.com/atamis/wt3/met/template"
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -17,27 +17,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	sess.Save(w, r)
 
-	w.Header().Set("Content-Type", "text/html")
-
-	if sess.LoggedIn {
-		homeLoggedOn(sess, w, r)
-	} else {
-		homeLoggedOff(sess, w, r)
-	}
-
-	w.Write([]byte("<a href=\"/login\">Login</a> or <a href=\"/logout\">Logout</a>"))
-}
-
-func homeLoggedOn(sess us.Session, w http.ResponseWriter, r *http.Request) {
-	user, err := sess.CurrentUser()
+	err = template.RenderTemplate(w, "index.tmpl", sess.Locals())
 
 	if err != nil {
-		w.Write([]byte(fmt.Sprintf("There was an error. Session state: %v", sess.Debug())))
-		return
+		panic(err)
 	}
-	w.Write([]byte(fmt.Sprintf("You are logged in. Welcome, %v.", user.Username)))
-}
-
-func homeLoggedOff(sess us.Session, w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("You are not logged on."))
 }

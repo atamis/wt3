@@ -1,0 +1,11 @@
+{{ define "sidebar" }}
+
+<div id="sidebar" style="float: right">
+  {{if .Session.LoggedIn }}
+    Welcome, {{ .Session.CurrentUser.Username }}
+  {{ else }}
+    You are not logged on
+  {{ end }}
+</div>
+
+{{ end }}

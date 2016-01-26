@@ -47,7 +47,7 @@ func (p *Poll) LoadAnswers() {
 	p.AnswersLoaded = true
 }
 
-func (p *Poll) Collated() []int {
+func (p Poll) Collated() []int {
 	ans := []int{0, 0, 0, 0, 0}
 	for _, v := range p.Answers {
 		ans[v.Answer]++

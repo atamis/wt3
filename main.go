@@ -5,11 +5,6 @@ import (
 	"net/http"
 )
 
-type State struct {
-	On      bool
-	Answers []uint
-}
-
 func main() {
 
 	fmt.Println("Listening on :8080")

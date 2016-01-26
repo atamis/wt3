@@ -7,6 +7,7 @@ import (
 
 	"github.com/atamis/wt3/data/poll"
 	us "github.com/atamis/wt3/data/usersession"
+	"github.com/atamis/wt3/met/template"
 	"github.com/gorilla/mux"
 )
 
@@ -30,6 +31,7 @@ func findPoll(r *http.Request) (poll.Poll, error) {
 }
 
 func Poll(w http.ResponseWriter, r *http.Request) {
+	sess, err := us.MakeSession(r)
 	poll, err := findPoll(r)
 
 	if err != nil {
@@ -37,12 +39,21 @@ func Poll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "text/html")
+	locals := sess.Locals()
+	locals["Poll"] = poll
+
+	err = template.RenderTemplate(w, "poll.tmpl", locals)
+
+	if err != nil {
+		panic(err)
+	}
+
+	/*w.Header().Set("Content-Type", "text/html")
 	w.Write([]byte(fmt.Sprintf("%v", poll.Collated())))
 	fmt.Fprintf(w, `<form method="post" action="%s">
 	<input type="text" name="answer">
 	<input type="submit" name="submit">
-	</form>`, r.URL.Path)
+	</form>`, r.URL.Path)*/
 }
 
 func Answer(w http.ResponseWriter, r *http.Request) {

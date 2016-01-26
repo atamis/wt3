@@ -1,0 +1,21 @@
+{{ define "base" }}
+<html>
+<head>
+  <title>{{ template "title" . }}</title>
+</head>
+<body>
+    {{ template "scripts" . }}
+    {{ template "sidebar" . }}
+    Poll results: {{ .Poll.Collated }}
+    <div>
+      <form method="post" action="{{ .Poll.Id }}">
+        <input type="text" name="answer">
+        <input type="submit" name="submit">
+      </form>
+    </div>
+  <footer>
+    {{ template "footer" . }}
+  </footer>
+</body>
+</html>
+{{ end }}

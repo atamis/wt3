@@ -85,6 +85,14 @@ func MakeSession(r *http.Request) (Session, error) {
 	return s, nil
 }
 
+func (s Session) Locals() map[string]interface{} {
+	locals := map[string]interface{}{
+		"Session": s,
+	}
+
+	return locals
+}
+
 func (s *Session) Save(w http.ResponseWriter, r *http.Request) error {
 	session, err := store.Get(r, "session-name")
 

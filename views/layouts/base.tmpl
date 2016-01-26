@@ -1,0 +1,22 @@
+{{ define "base" }}
+<html>
+<head>
+  <title>{{ template "title" . }}</title>
+</head>
+<body>
+    {{ template "scripts" . }}
+    {{ template "sidebar" . }}
+    <div>
+      Welcome to the main page
+    </div>
+<footer>
+  {{ template "footer" . }}
+    ...
+</footer>
+</body>
+</html>
+{{ end }}
+// We define empty blocks for optional content so we don't have to define a block in child templates that don't need them
+{{ define "scripts" }}{{ end }}
+{{ define "sidebar" }}{{ end }}
+
